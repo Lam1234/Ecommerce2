@@ -26,6 +26,13 @@
 		</div>
 
 		<div class="form-group">
+			{{Form::label('price','Price')}}
+			{{Form::text('price',null,array('class'=>'form-control'))}}
+
+
+		</div>
+
+		<div class="form-group">
 			{{Form::label('size','Size')}}
 			{{Form::select('size',['small'=>'Small','medium'=>'Medium','large'=>'Large'],null,['class'=>'form-control'])}}
 
