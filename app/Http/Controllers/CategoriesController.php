@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
+
 use Illuminate\Http\Request;
 
 class CategoriesController extends Controller
@@ -14,6 +16,8 @@ class CategoriesController extends Controller
     public function index()
     {
         //
+        $categories=Category::all();
+        return view('admin.category.index',compact('categories'));
     }
 
     /**
@@ -35,6 +39,8 @@ class CategoriesController extends Controller
     public function store(Request $request)
     {
         //
+        Category::create($request->all());
+        return back();
     }
 
     /**
@@ -46,6 +52,10 @@ class CategoriesController extends Controller
     public function show($id)
     {
         //
+         $products=Category::find($id)->products;
+
+         $categories=Category::all();
+        return view('admin.category.index',compact('categories','products'));
     }
 
     /**
