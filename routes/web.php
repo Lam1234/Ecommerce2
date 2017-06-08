@@ -29,6 +29,8 @@ Route::get('/logout','Auth\LoginController@logout');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::resource('/cart','CartController');
+
 Route::group(['prefix'=>'admin','middleware'=>'auth'],function(){
 
 	Route::get('/',function(){

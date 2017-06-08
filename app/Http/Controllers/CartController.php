@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Category;
 use App\Product;
-
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 
-class ProductsController extends Controller
+class CartController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +16,8 @@ class ProductsController extends Controller
     public function index()
     {
         //
-        $products=Product::all();
-        return view('admin.product.index',compact('products'));
+        $cartItems=Cart::content();
+        return view('cart.index',compact('cartItems'));
     }
 
     /**
@@ -26,11 +25,10 @@ class ProductsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($productId)
     {
         //
-        $categories=Category::pluck('name','id');
-        return view('admin.product.create',compact('categories'));
+       
     }
 
     /**
@@ -42,27 +40,6 @@ class ProductsController extends Controller
     public function store(Request $request)
     {
         //
-        $formInput=$request->except('image');
-
-        //validation
-        $this->validate($request,[
-            'name'=>'required',
-            'size'=>'required',
-            'price'=>'required',
-            'image'=>'image|mimes:png,jpg,jpeg|max:10000'
-            ]);
-
-
-        //image upload
-        $image=$request->image;
-        if($image){
-            $imageName=$image->getClientOriginalName();
-            $image->move('images',$imageName);
-            $formInput['image']=$imageName;
-        }
-
-        Product::create($formInput);
-        return redirect()->route('product.index');
     }
 
     /**
@@ -85,6 +62,11 @@ class ProductsController extends Controller
     public function edit($id)
     {
         //
+         $product = Product::find($id);
+
+        Cart::add($id,$product->name,1,$product->price,['size'=>'medium']);
+
+        return back();
     }
 
     /**
@@ -97,6 +79,8 @@ class ProductsController extends Controller
     public function update(Request $request, $id)
     {
         //
+        Cart::update($id,$request->qty);
+        return back();
     }
 
     /**
