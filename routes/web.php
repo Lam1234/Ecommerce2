@@ -30,8 +30,10 @@ Route::get('/logout','Auth\LoginController@logout');
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('/cart','CartController');
+Route::get('/cart/add-item/{id}','CartController@addItem')->name('cart.addItem');
 
-Route::group(['prefix'=>'admin','middleware'=>'auth'],function(){
+
+Route::group(['prefix'=>'admin','middleware'=>['auth','admin']],function(){
 
 	Route::get('/',function(){
 			return view('admin.index');
@@ -40,4 +42,10 @@ Route::group(['prefix'=>'admin','middleware'=>'auth'],function(){
 	Route::resource('product','ProductsController');
 
 	Route::resource('category','CategoriesController');
+
 });
+
+Route::resource('address','AddressController');
+
+Route::get('checkout','CheckoutController@step1');
+Route::get('shipping-info','CheckoutController@shipping')->name('checkout.shipping');
