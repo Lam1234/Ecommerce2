@@ -77,6 +77,10 @@
 </footer>
 
     <script src="{{asset('dist/js/vendor/jquery.js')}}"></script>
+    <script  src="https://js.stripe.com/v3/"></script>
+<script >
+    Stripe.setPublishableKey('pk_test_k1izWPPLzTxqavhIsoFz52ug');
+</script>
     <script src="{{asset('dist/js/app.js')}}"></script>
     </body>
 </html>
