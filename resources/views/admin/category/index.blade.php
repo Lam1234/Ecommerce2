@@ -1,93 +1,85 @@
 @extends('admin.layout.admin')
 
 @section('content')
-	<div class="navbar">
-		<a class="navbar-brand" href="#">Categories=>
-			
-		</a>
-		<ul class="nav navbar-nav">
-		 @if(!empty($categories))
-		 	@forelse($categories as $category)
-		 		<li>
-					<a href="{{route('category.show',$category->id)}}">{{$category->name}}</a>
-		 		</li>
+<div class="navbar">
+	<a class="navbar-brand" href="#">Categories=>
 
-		 		@empty
-		 		<li>No data</li>
-		 		@endforelse
-			@endif
+	</a>
+	<ul class="nav navbar-nav">
+		@if(!empty($categories))
+		@forelse($categories as $category)
+		<li>
+			<a href="{{route('category.show',$category->id)}}">{{$category->name}}</a>
+		</li>
 
-		</ul>
+		@empty
+		<li>No data</li>
+		@endforelse
+		@endif
 
-		<a class="btn btn-primary" data-toggle="modal" href="#modal-id">Add Category</a>
-		<div class="modal fade" id="modal-id">
-				<div class="modal-dialog">
+	</ul>
 
-					{!! Form::open(['route'=>'category.store','method'=>'post'])!!}
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-							<h4 class="modal-title">Add Category</h4>
-						</div>
-						<div class="modal-body">
-							<div class="form-group">
-								{{Form::label('name','Name')}}
-								{{Form::text('name',null,array('class'=>'form-control'))}}
+	<a class="btn btn-primary" data-toggle="modal" href="#modal-id">Add Category</a>
+	<div class="modal fade" id="modal-id">
+		<div class="modal-dialog">
 
-							</div>
-								
-						</div>
+			{!! Form::open(['route'=>'category.store','method'=>'post'])!!}
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title">Add Category</h4>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						{{Form::label('name','Name')}}
+						{{Form::text('name',null,array('class'=>'form-control'))}}
 
-						<div class="modal-footer">
-							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-
-							<button type="submit" class="btn btn-primary">Save changes</button>
-
-						</div>
 					</div>
-
-					{!! Form::close()!!}
 
 				</div>
 
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 
+					<button type="submit" class="btn btn-primary">Save changes</button>
 
+				</div>
+			</div>
+
+			{!! Form::close()!!}
 
 		</div>
+	</div>
+</div> 
 
+@if(!empty($products))
+<section>
+	<h3>Products</h3>
 
+	<table class="table table-hover">
+		<thead>
 
+			<tr>
+				<th>Products</th>
 
-	</div> 
+			</tr>
+		</thead>
+		<tbody>
 
-		@if(!empty($products))
-			<section>
-				<h3>Products</h3>
+			@forelse($products as $product)
+			<tr>
+				<td>{{$product->name}}</td>
 
-				<table class="table table-hover">
-					<thead>
-						
-							<tr>
-								<th>Products</th>
+			</tr>
+			@empty
+			<tr>
+				<td>No Data</td>
+			</tr>
+			@endforelse
 
-							</tr>
-					</thead>
-					<tbody>
+		</tbody>
+	</table>
+</section>
+@endif
 
-					@forelse($products as $product)
-						<tr>
-							<td>{{$product->name}}</td>
-
-						</tr>
-						@empty
-						<tr>
-							<td>No Data</td>
-						</tr>
-						@endforelse
-
-					</tbody>
-					</table>
-			</section>
-		@endif
-
-	@endsection
+@endsection

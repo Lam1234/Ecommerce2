@@ -57,6 +57,7 @@ class ProductsController extends Controller
         $image=$request->image;
         if($image){
             $imageName=$image->getClientOriginalName();
+            //move this image to images folder
             $image->move('images',$imageName);
             $formInput['image']=$imageName;
         }
